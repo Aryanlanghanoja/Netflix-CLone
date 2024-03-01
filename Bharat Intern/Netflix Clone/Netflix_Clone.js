@@ -1,13 +1,7 @@
-window.addEventListener('scroll', function () {
-    var nav = document.querySelector(".nav");
-    nav.classList.toggle("active", this.window.scrollY > 0);
-})
-
-const api = "api_key=0d7fcb538472b4a248392fdafdaf9ae8532";
+const api = "api_key=82ed0cb0eaf8ab981bd11dd668999698";
 const base_url = "https://api.themoviedb.org/3";
 const banner_url = "https://image.tmdb.org/t/p/original";
-const img_url = "https://image.tmdb.org/t/p/w185"; 
-
+const img_url = "https://image.tmdb.org/t/p/w500"; 
 const requests = {
     fetchPopular: `${base_url}/discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&${api}`,
     fetchTrending: `${base_url}/trending/all/week?${api}&language=en-US`,
@@ -24,7 +18,7 @@ function truncate(str, n) {
 }
 
 fetch(requests.fetchNetflixOrignals)
-    .then(res => res.json())
+    .then((res) => res.json())
   
     .then((data) => {
         console.log(data.results);
@@ -36,9 +30,11 @@ fetch(requests.fetchNetflixOrignals)
         var banner_desc = document.getElementById('banner_description');
 
         banner.style.backgroundImage = "url(" + banner_url + setMovie.backdrop_path + ")";
-        bannner_desc.innerText = truncate(setMovie.overview, 150);
-        banner_title.innerText = setMovie.title;
+        banner_desc.innerText = truncate(setMovie.overview, 150);
+        banner_title.innerText = setMovie.name;
     });
+
+
 
 fetch(requests.fetchNetflixOrignals)
     .then((res) => res.json())
@@ -46,8 +42,221 @@ fetch(requests.fetchNetflixOrignals)
 
     .then((data) => {
         const headrow = document.getElementById('headrow');
-        const row = document.getElementById('div');
-
+        const row = document.createElement('div');
         row.className = "row";
         row.classList.add("netflixrow")
+        headrow.appendChild(row);
+        const title = document.createElement("h2");
+        title.className = "row_title";
+        title.innerText = "NETFLIX ORIGINALS";
+        row.appendChild(title);
+
+        const row_posters = document.createElement("div");
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement("img");
+            poster.className = "row_posterLarge";
+            var s = movie.name.replace(/\s+/g, "");
+            poster.id = s;
+            poster.src = img_url + movie.poster_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchPopular)
+    .then((res) => res.json())
+
+
+    .then((data) => {
+        const headrow = document.getElementById('headrow');
+        const row = document.createElement('div');
+        row.className = "row";
+        row.classList.add("netflixrow")
+        headrow.appendChild(row);
+        const title = document.createElement("h2");
+        title.className = "row_title";
+        title.innerText = "Popular Movies";
+        row.appendChild(title);
+
+        const row_posters = document.createElement("div");
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement("img");
+            poster.className = "row_posterLarge";
+            var s = movie.name.replace(/\s+/g, "");
+            poster.id = s;
+            poster.src = img_url + movie.poster_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchPopular)
+    .then((res) => res.json())
+
+    .then((data) => {
+        const headrow = document.getElementById("headrow");
+        const row = document.createElement('div');
+
+        row.className = "row";
+        row.classList.add("popularrow");
+        headrow.appendChild(row);
+
+        const title = document.createElement("h2");
+        title.className = "row_title";
+        title.innerText = "Popular Movies";
+        row.appendChild(title);
     })
+
+fetch(requests.fetchTrending)
+    .then((res) => res.json())
+    .then((data) => {
+        const headrow = document.getElementById("headrow");
+        const row = document.createElement('div');
+        row.className = "row";
+        headrow.appendChild(row);
+        const title = document.createElement("h2");
+        title.className = "row_title";
+        title.innerText = "Top Rated";
+        row.appendChild(title);
+        const row_posters = document.createElement("div");
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement("img");
+            poster.className = "row_posterLarge";
+            var s2 = movie.id;
+            poster.id = s2;
+            poster.src = img_url + movie.poster_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchActionMovies)
+    .then((res) => res.json())
+    .then((data) => {
+        const headrow = document.getElementById('headrow');
+        const row = document.createElement('div');
+        row.className = "row";
+        headrow.appendChild(row);
+        const title = document.createElement('h2');
+        title.className = "row_title";
+        title.innerText = "Action Movies";
+        row.appendChild(title);
+        const row_posters = document.createElement('div');
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement('img');
+            poster.className = "row_poster";
+            var s2 = movie.id;
+            poster.id = s2;
+            poster.src = img_url + movie.backdrop_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchComedyMovies)
+    .then((res) => res.json())
+    .then((data) => {
+        const headrow = document.getElementById('headrow');
+        const row = document.createElement('div');
+        row.className = "row";
+        headrow.appendChild(row);
+        const title = document.createElement('h2');
+        title.className = "row_title";
+        title.innerText = "Comedy Movies";
+        row.appendChild(title);
+        const row_posters = document.createElement('div');
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement('img');
+            poster.className = "row_poster";
+            var s2 = movie.id;
+            poster.id = s2;
+            poster.src = img_url + movie.backdrop_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchHorrorMovies)
+    .then((res) => res.json())
+    .then((data) => {
+        const headrow = document.getElementById('headrow');
+        const row = document.createElement('div');
+        row.className = "row";
+        headrow.appendChild(row);
+        const title = document.createElement('h2');
+        title.className = "row_title";
+        title.innerText = "Horror Movies";
+        row.appendChild(title);
+        const row_posters = document.createElement('div');
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement('img');
+            poster.className = "row_poster";
+            var s2 = movie.id;
+            poster.id = s2;
+            poster.src = img_url + movie.backdrop_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchRomanceMovies)
+    .then((res) => res.json())
+    .then((data) => {
+        const headrow = document.getElementById('headrow');
+        const row = document.createElement('div');
+        row.className = "row";
+        headrow.appendChild(row);
+        const title = document.createElement('h2');
+        title.className = "row_title";
+        title.innerText = "Romantic Movies";
+        row.appendChild(title);
+        const row_posters = document.createElement('div');
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement('img');
+            poster.className = "row_poster";
+            var s2 = movie.id;
+            poster.id = s2;
+            poster.src = img_url + movie.backdrop_path;
+            row_posters.appendChild(poster);
+        });
+    });
+
+fetch(requests.fetchDocumentaries)
+    .then((res) => res.json())
+    .then((data) => {
+        const headrow = document.getElementById('headrow');
+        const row = document.createElement('div');
+        row.className = "row";
+        headrow.appendChild(row);
+        const title = document.createElement('h2');
+        title.className = "row_title";
+        title.innerText = "Documentaries";
+        row.appendChild(title);
+        const row_posters = document.createElement('div');
+        row_posters.className = "row_posters";
+        row.appendChild(row_posters);
+
+        data.results.forEach((movie) => {
+            const poster = document.createElement('img');
+            poster.className = "row_poster";
+            var s2 = movie.id;
+            poster.id = s2;
+            poster.src = img_url + movie.backdrop_path;
+            row_posters.appendChild(poster);
+        });
+    });
