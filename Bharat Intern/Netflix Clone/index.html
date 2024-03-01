@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Netflix</title>
-    <link rel="stylesheet" href="Netflix_Clone.css">
+    <link rel="stylesheet" href="./Netflix_Clone.css">
+    <script src="./Netflix_Clone.js"></script>
 </head>
+
 <body>
 
-    <!-- Navbar -->
     <div class="nav">
         <div class="nav_left">
-            <a href="index.html">
+            <a href="Netflix_Clone.html">
                 <img src="Logo.png" alt="" class="nav_logo">
             </a>
         </div>
@@ -19,8 +21,6 @@
             <img src="Profile.jpg" alt="" class="nav_avatar">
         </div>
     </div>
-
-    <!-- Banner -->
 
     <header id="banner">
         <div id="banner_contents">
@@ -30,13 +30,10 @@
                 <button id="banner_button">My List</button>
             </div>
             <p id="banner_description"></p>
-            </div>
-            <div id="banner_fadeBottom"></div>
+        </div>
+        <div id="banner_fadeBottom"></div>
         </div>
     </header>
-
-
-    <!-- Row -->
 
     <div id="headrow">
         <div class="row">
@@ -45,7 +42,13 @@
         </div>
     </div>
 
+    <script>
+        window.addEventListener('scroll', function () {
+            var nav = document.querySelector(".nav");
+            nav.classList.toggle("active", window.scrollY > 0);
+        });  
+    </script>
 
-    <script src="Netflix_Clone.js"></script>
 </body>
+
 </html>
